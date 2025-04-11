@@ -52,26 +52,6 @@
                 v-for="todo in sortedTodos"
                 v-bind:key="todo.createdDate"
             >
-                <!--<div>
-                    <input
-                        type="checkbox"
-                        v-bind:id="todo.createdDate"
-                        v-model="todo.completed"
-                    >
-                    <label
-                        v-bind:class="{ isDone : todo.completed }"
-                        v-bind:for="todo.createdDate"
-                    >
-                        <strong>{{ todo.title }}</strong>
-                    </label>
-                    <button
-                        style="margin-left: 10px;"
-                        class="btn-small btn-small-red"
-                        @click="deleteTodo(todo)"
-                    >
-                        Supprimer
-                    </button>
-                </div>-->
                 <div style="display: flex;">
                     <Checkbox
                         v-bind:isDone="todo.completed"
@@ -112,42 +92,33 @@
         Il vous reste {{ remainingTodos }} tâche{{ remainingTodos > 1 ? 's' : '' }} à faire
     </div>
 
-    <!--<div style="margin-top: 20px;">
-        <Checkbox
-            v-bind:label="'Bonjour les gens'"
-            v-bind:id="10000000000"
-            v-bind:for="10000000000"
-
-            @check="log('Coché !')"
-            @uncheck="log('Décoché !')"
-        />
-    </div>-->
-
 </template>
 
 
 <script setup>
 
-    import { computed, ref } from 'vue'
+    import { computed, onMounted, onUnmounted, ref } from 'vue'
     import Checkbox from './utils-components/Checkbox.vue'
 
-    const todos = ref([
-        {
-            'title' : "Première tâche de test",
-            'completed' : false,
-            'createdDate' : 1,
-        },
-        {
-            'title' : "Seconde tâche de test",
-            'completed' : true,
-            'createdDate' : 2,
-        },
-        {
-            'title' : "Troisième tâche de test",
-            'completed' : false,
-            'createdDate' : 3,
-        },
-    ])
+    const todos = ref([])
+
+    onMounted (() => {
+        fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)
+                console.log(todos.value)
+                todos.value = data.map((todo) => ({
+                    ...todo,
+                    createdDate : todo.id
+                }))
+                console.log(todos.value)
+            })
+    })
+
+    onUnmounted (() => {
+        console.log("Composant démonté du le DOM !")
+    })
 
     const newTodoTitle = ref('')
 
@@ -182,10 +153,6 @@
         return todos.value.filter((todo) => !todo.completed).length
     })
 
-    const log = (value) => {
-        console.log(value)
-    }
-
 </script>
 
 
@@ -211,11 +178,6 @@
 
     button:disabled {
         cursor: not-allowed;
-    }
-
-    .isDone {
-        opacity: 0.7;
-        text-decoration: line-through;
     }
 
 </style>

@@ -128,26 +128,29 @@
 
 <script setup>
 
-    import { computed, ref } from 'vue'
+    import { computed, onMounted, onUnmounted, ref } from 'vue'
     import Checkbox from './utils-components/Checkbox.vue'
 
-    const todos = ref([
-        {
-            'title' : "Première tâche de test",
-            'completed' : false,
-            'createdDate' : 1,
-        },
-        {
-            'title' : "Seconde tâche de test",
-            'completed' : true,
-            'createdDate' : 2,
-        },
-        {
-            'title' : "Troisième tâche de test",
-            'completed' : false,
-            'createdDate' : 3,
-        },
-    ])
+    const todos = ref([])
+
+    onMounted (() => {
+        console.log("Composant monté sur le DOM !")
+        fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)
+                console.log(todos.value)
+                todos.value = data.map((todo) => ({
+                    ...todo,
+                    createdDate : todo.id
+                }))
+                console.log(todos.value)
+            })
+    })
+
+    onUnmounted (() => {
+        console.log("Composant démonté du le DOM !")
+    })
 
     const newTodoTitle = ref('')
 
