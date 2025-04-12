@@ -135,10 +135,11 @@
     })
 
     const fetchTodos = async () => {
+        const { data: sessionData } = await supabase.auth.getSession()
+
         try {
             isLoading.value = true
             error.value = null
-            const { data: sessionData } = await supabase.auth.getSession()
             const { data, error: fetchError } = await supabase
                 .from('todos')
                 .select('*')
