@@ -196,7 +196,7 @@
     const deleteTodo = async (todo) => {
         try {
             error.value = null
-            const { data, error: deleteError } = await supabase
+            const { error: deleteError } = await supabase
                 .from('todos')
                 .delete()
                 .eq('id', todo.id)

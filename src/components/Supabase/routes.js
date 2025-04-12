@@ -10,8 +10,10 @@ import TodoLayout from "./TodoLayout.vue";
 export const routes = [
     {
         path: '/auth',
+        alias: '/auth/',
         component: AuthLayout,
         children: [
+            { path : '', component : Login, },
             { path : 'login', component : Login, name : 'login' },
             { path : 'register', component : Register, name : 'register' },
         ]
@@ -19,7 +21,9 @@ export const routes = [
     {
         path: '/',
         component: TodoLayout,
+        meta: { requiresAuth: true },
         children: [
+            { path: '', component: Home },
             { path: 'home', component: Home, name: 'home' },
             { path: 'todos', component: Todos, name: 'todos' },
         ]
