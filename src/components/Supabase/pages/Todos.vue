@@ -138,9 +138,11 @@
         try {
             isLoading.value = true
             error.value = null
+            const { data: sessionData } = await supabase.auth.getSession()
             const { data, error: fetchError } = await supabase
                 .from('todos')
                 .select('*')
+                .eq('user_id', sessionData.session.user.id)
                 .order('created_at', { ascending: false })
             if (fetchError) throw fetchError
             todos.value = data
@@ -157,13 +159,18 @@
 
     const addTodo = async () => {
         if (!newTodoTitle.value.trim()) return
+        const { data: sessionData } = await supabase.auth.getSession()
 
         try {
             error.value = null
             const { data, error: insertError } = await supabase
                 .from('todos')
                 .insert([
-                    { title: newTodoTitle.value.trim(), is_completed: false }
+                    {
+                        title: newTodoTitle.value.trim(),
+                        is_completed: false,
+                        user_id: sessionData.session.user.id
+                    }
                 ])
                 .select()
             if (insertError) throw insertError
