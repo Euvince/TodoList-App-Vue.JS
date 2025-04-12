@@ -133,6 +133,10 @@
 
     const todos = ref([])
 
+    const newTodoTitle = ref('')
+
+    const hideCompletedTodos = ref(false)
+
     onMounted (() => {
         console.log("Composant monté sur le DOM !")
         fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
@@ -151,10 +155,6 @@
     onUnmounted (() => {
         console.log("Composant démonté du le DOM !")
     })
-
-    const newTodoTitle = ref('')
-
-    const hideCompletedTodos = ref(false)
 
     const addTodo = () => {
         todos.value = [{

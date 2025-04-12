@@ -5,6 +5,7 @@
         <input
             type="checkbox"
             v-bind:id="id"
+            v-bind:checked="isDone"
             v-model="model"
             @change="onChange"
         >
