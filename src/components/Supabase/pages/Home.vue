@@ -2,7 +2,7 @@
 <template>
 
     <div style="margin-top: 40px;">
-        <h3>Bonjour à tous, ici la page principale de l'application, la HOMEPAGE.</h3>
+        <h3>Bonjour à tous, ici la page d'acceuil de l'application.</h3>
     </div>
 
 </template>

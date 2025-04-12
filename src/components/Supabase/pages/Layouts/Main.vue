@@ -1,7 +1,7 @@
 
 <template>
 
-    <div style="margin-top: 40px;">
+    <div>
         <RouterView />
     </div>
 
@@ -11,20 +11,25 @@
 <script setup>
 
     import { computed, ref } from 'vue'
+    import { RouterView } from 'vue-router';
     import { useRoute } from 'vue-router';
 
-    // Obtenir les params de la route
     const route = useRoute()
     console.log(route.params)
     const id = route.params.id
 
-    const link = computed(() => ({
-        name : 'posts.show',
+    const p = computed(() => ({
+        name : 'todos.show',
         params : {
-            id : props.post.id,
+            id : props.todo.id,
             id : route.params.id,
         }
     }))
+
+    const showHeader = computed(() => {
+        const hiddenHeaderNames = ['auth']
+        return !hiddenHeaderNames.includes(route.name)
+    })
 
 </script>
 

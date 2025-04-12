@@ -152,10 +152,6 @@
             })
     })
 
-    onUnmounted (() => {
-        console.log("Composant démonté du le DOM !")
-    })
-
     const addTodo = () => {
         todos.value = [{
             title : newTodoTitle.value,
@@ -188,6 +184,10 @@
     const log = (value) => {
         console.log(value)
     }
+
+    onUnmounted (() => {
+        console.log("Composant démonté du le DOM !")
+    })
 
 </script>
 

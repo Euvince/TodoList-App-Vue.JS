@@ -107,8 +107,8 @@
 <script setup>
 
     import { computed, onMounted, onUnmounted, ref } from 'vue'
-    import Checkbox from './utils-components/Checkbox.vue'
-    import { supabase } from './supabase'
+    import { supabase } from '../supabase'
+    import Checkbox from '../utils-components/Checkbox.vue'
 
     const todos = ref([])
 
@@ -120,11 +120,19 @@
 
     const error = ref(null)
 
+    const subscription = ref(null)
+
     onMounted (() => {
         fetchTodos()
+        subscription.value = supabase
+            .channel('todos-changes')
+            .on('postgres_changes', {
+            event: '*',
+            schema: 'public',
+            table: 'todos'
+            }, fetchTodos)
+            .subscribe()
     })
-
-    onUnmounted (() => {})
 
     const fetchTodos = async () => {
         try {
@@ -215,6 +223,12 @@
 
     const remainingTodos = computed(() => {
         return todos.value.filter((todo) => !todo.is_completed).length
+    })
+
+    onUnmounted (() => {
+        if (subscription.value) {
+            subscription.value.unsubscribe()
+        }
     })
 
 </script>

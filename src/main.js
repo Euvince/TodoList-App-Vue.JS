@@ -1,4 +1,15 @@
 import { createApp } from 'vue'
-import TodoList from './components/Supabase/TodoList.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import AuthLayout from './components/Supabase/AuthLayout.vue'
+import { routes } from './components/Supabase/routes'
 
-createApp(TodoList).mount('#app')
+
+const router = createRouter({
+    history : createWebHistory(),
+    routes
+})
+
+const app = createApp(AuthLayout)
+
+app.use(router)
+app.mount('#app')

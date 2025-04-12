@@ -4,28 +4,23 @@
     <div>
         <nav>
             <ul>
-                <RouterLink
-                    style="text-decoration: none; color: white; cursor: pointer;"
-                    v-bind:to="{ name : 'home' }"
-                >
-                    <strong>Tester VueRouter</strong>
-                </RouterLink>
+                <strong>TodoApp</strong>
             </ul>
             <ul>
                 <li>
                     <RouterLink
                         class="router-link"
-                        to="/about"
+                        to="/home"
                     >
-                        À propos
+                        Acceuil
                     </RouterLink>
                 </li>
                 <li>
                     <RouterLink
                         class="router-link"
-                        to="/contact"
+                        to="/todos"
                     >
-                        Contact
+                        Tâches
                     </RouterLink>
                 </li>
             </ul>

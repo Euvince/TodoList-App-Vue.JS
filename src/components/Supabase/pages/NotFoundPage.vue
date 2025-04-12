@@ -2,7 +2,7 @@
 <template>
 
     <div style="margin-top: 40px;">
-        <h3>Page introuvable !</h3>
+        <h3>404 | Page introuvable !</h3>
     </div>
 
 </template>
