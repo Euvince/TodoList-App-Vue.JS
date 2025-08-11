@@ -37,7 +37,7 @@
             <div
                 style="margin-bottom: 20px; margin-left: -12px;"
             >
-                <strong>Vous n'avez aucune tâche à faire</strong>
+                <strong>Vous n'avez aucune tâche à faire.</strong>
             </div>
         </div>
         <div
